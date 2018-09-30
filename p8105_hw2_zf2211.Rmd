@@ -31,6 +31,14 @@ nrow(Transit_Data)
 ncol(Transit_Data)
 ```
 
+Yes, these data are tidy now.
+
+1)There are 
+```{r}
+count(distinct(Transit_Data, station_name, line))
+```
+stations.
+
 ```{r problem2}
 
 ```
