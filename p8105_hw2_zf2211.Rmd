@@ -71,10 +71,15 @@ distinct stations are ADA compliant.
 
 ##Problem2
 ```{r}
+library(readxl)
+library(tidyverse)
 
 ```
 
 ```{r problem2}
+Health_Harbor = 
+  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx") %>% 
+  janitor::clean_names()
 
 ```
 
