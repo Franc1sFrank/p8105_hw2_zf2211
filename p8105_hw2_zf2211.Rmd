@@ -10,6 +10,7 @@ library(tidyverse)
 library(tidyr)
 ```
 
+##Problem1
 ```{r problem1}
 Transit_Data = 
   read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
@@ -21,9 +22,13 @@ Transit_Data =
 select(Transit_Data, entry) %>% 
 mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE))
 ```
-This dataset contains variables like: line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada.
+This dataset contains variables like: 
+```{r}
+names(Transit_Data)
+```
 
-I used janitor::clean_names to clean the names of data, then select several variables from the data, at last converted the entry into logical variables.
+
+I used __janitor::clean_names__ to clean the names of data, then __select__ several variables from the data, at last converted the entry into logical variables.
 
 The number of rows and columns of the resulting dataset is 
 ```{r}
@@ -31,7 +36,8 @@ nrow(Transit_Data)
 ncol(Transit_Data)
 ```
 
-Yes, these data are tidy now.
+No, it is not yet tidy because route1 to route11 is separated. It will be better to 
+sort out together.
 
 1)There are 
 ```{r}
@@ -39,11 +45,43 @@ count(distinct(Transit_Data, station_name, line))
 ```
 stations.
 
+2)There are 
+```{r}
+count(distinct(filter(Transit_Data, ada == TRUE), station_name))
+```
+stations are ADA compliant.
+
+3)The proportion of station entrance/exits without vending allow entrance is 
+```{r}
+count(distinct(Transit_Data, entrances, vending = FALSE, entry = TRUE)) /
+  count(distinct(Transit_Data, entrances))
+```
+
+4)There are 
+```{r}
+count(distinct(filter(Transit_Data, route1 == "A")))
+```
+distict stations serve A train.
+
+5)Of the stations that serve the A train, there are
+```{r}
+count(distinct(filter(Transit_Data, route1 == "A", ada == TRUE)))
+```
+distinct stations are ADA compliant.
+
+##Problem2
+```{r}
+
+```
+
 ```{r problem2}
 
 ```
 
 ```{r problem3}
-
+ 
+  read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
+  janitor::clean_names() %>% 
+  select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada)
 ```
 
