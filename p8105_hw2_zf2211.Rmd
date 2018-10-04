@@ -81,19 +81,27 @@ MrTrash_Wheel =
   janitor::clean_names() %>% 
   filter(!is.na("Dumpster")) %>% 
   mutate(as.integer(round(sports_balls)))
+```
 
+```{r}
 prcp2016 = 
   read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 4) %>% 
   janitor::clean_names() %>%
   filter(!is.na("Total")) %>% 
   mutate(year = 2016)
+```
 
+```{r}
 prcp2017 = 
   read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 3) %>% 
   janitor::clean_names() %>%
   filter(!is.na("Total")) %>% 
   mutate(year = 2017)
-print(prcp2017)
+```
+
+```{r}
+prcp =
+  full_join(prcp2016, prcp2017)
 ```
 
 ```{r problem3}
