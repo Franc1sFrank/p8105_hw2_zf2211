@@ -77,15 +77,15 @@ library(tidyverse)
 
 ```{r problem2}
 MrTrash_Wheel = 
-  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 1, range = "A2:N258") %>% 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 1, range = "A2:N338") %>% 
   janitor::clean_names() %>% 
-  filter(!is.na("Dumpster")) %>% 
+  filter(!is.na("weight")) %>% 
   mutate(as.integer(round(sports_balls)))
 ```
 
 ```{r}
 prcp2016 = 
-  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 4) %>% 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 4) %>% 
   janitor::clean_names() %>%
   filter(!is.na("Total")) %>% 
   mutate(year = 2016)
@@ -93,7 +93,7 @@ prcp2016 =
 
 ```{r}
 prcp2017 = 
-  read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 3) %>% 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 3) %>% 
   janitor::clean_names() %>%
   filter(!is.na("Total")) %>% 
   mutate(year = 2017)
