@@ -85,7 +85,7 @@ MrTrash_Wheel =
 
 ```{r}
 prcp2016 = 
-  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 4) %>% 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 5, range = "A2:B14") %>% 
   janitor::clean_names() %>%
   filter(!is.na("Total")) %>% 
   mutate(year = 2016)
@@ -93,22 +93,24 @@ prcp2016 =
 
 ```{r}
 prcp2017 = 
-  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 3) %>% 
+  read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 4, range = "A2:B14") %>% 
   janitor::clean_names() %>%
   filter(!is.na("Total")) %>% 
   mutate(year = 2017)
-print(prcp2017)
 ```
 
+Combine datasets
 ```{r}
-prcp =
-  full_join(prcp2016, prcp2017) %>% 
-print(month.name)
-#print(prcp)
+prcp = 
+  bind_rows(prcp2016, prcp2017) %>%
+   mutate(month = month.name[month]) %>% 
+    select(year, month, total)
 ```
 
+
+The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` rows and `r ncol(MrTrash_Wheel)` columns, and the prcp dataset contains `r nrow(prcp)` rows and `r ncol(prcp)` columns. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(MrTrash_Wheel, "Sports_Balls")
 ```{r problem3}
-brfss =  
+brfss = 
   read.csv(url("https://github.com/P8105/p8105.datasets")) %>% 
   janitor::clean_names()
 
