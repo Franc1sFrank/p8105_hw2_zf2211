@@ -117,3 +117,14 @@ library(p8105.datasets)
 data(brfss_smart2010, package = "p8105.datasets")
 ```
 
+```{r}
+brfss = 
+  brfss_smart2010 %>% 
+  janitor::clean_names() %>% 
+  filter (topic == "Overall Health") %>% 
+  select (-class, -topic, - question, -sample_size, -(confidence_limit_low:geo_location)) %>% 
+  spread (key = response, value = data_value ) %>% 
+  janitor::clean_names() %>% 
+  mutate(Proportion = excellent + very_good)
+```
+
