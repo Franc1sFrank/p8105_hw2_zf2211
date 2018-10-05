@@ -108,11 +108,12 @@ prcp =
 ```
 
 
-The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` rows and `r ncol(MrTrash_Wheel)` columns, and the prcp dataset contains `r nrow(prcp)` rows and `r ncol(prcp)` columns. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(MrTrash_Wheel, "Sports_Balls")
-```{r problem3}
-brfss = 
-  read.csv(url("https://github.com/P8105/p8105.datasets")) %>% 
-  janitor::clean_names()
+The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` rows and `r ncol(MrTrash_Wheel)` columns, and the prcp dataset contains `r nrow(prcp)` rows and `r ncol(prcp)` columns. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(filter(MrTrash_Wheel, year == 2016)$sports_balls)`
 
+
+```{r problem3}
+devtools::install_github("p8105/p8105.datasets")
+library(p8105.datasets)
+data(brfss_smart2010, package = "p8105.datasets")
 ```
 
