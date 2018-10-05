@@ -127,4 +127,35 @@ brfss =
   janitor::clean_names() %>% 
   mutate(Proportion = excellent + very_good)
 ```
+# Answers
+There are 
+```{r}
+nrow(distinct(brfss, locationdesc))
+```
+unique locations are included in the dataset.
+```{r}
+nrow(distinct(brfss, locationabbr))
+```
+states in US are represented. 
+```{r} 
+count_(brfss, 'locationabbr', sort = TRUE)
+```
+NJ is the most observed.
+
+```{r}
+brfss_2002 = filter(brfss, year == 2002)
+median(brfss_2002$excellent, na.rm = TRUE)
+```
+is the median of the "Excellent" response value.
+
+```{r}
+ggplot(brfss_2002, aes(x = excellent)) + geom_histogram()
+```
+
+```{r}
+brfss_NY = filter(brfss, locationdesc == "NY - New York County")
+brfss_Qu = filter(brfss, locationdesc == "NY - Queens County")
+brfss_NYQu = rbind(brfss_NY, brfss_Qu)
+ggplot(brfss_NYQu, aes(x = year, y = excellent, color = locationdesc)) + geom_point() + geom_smooth(se = FALSE)
+```
 
