@@ -125,7 +125,7 @@ prcp =
 ```
 
 
-The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` observations and `r ncol(MrTrash_Wheel)` variables, and the prcp dataset contains `r nrow(prcp)` observations and `r ncol(prcp)` variables. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(filter(MrTrash_Wheel, year == 2016)$sports_balls)`
+The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` observations and `r ncol(MrTrash_Wheel)` variables, and the prcp dataset contains `r nrow(prcp)` observations and `r ncol(prcp)` variables. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(filter(MrTrash_Wheel, year == 2016)$sports_balls)`.
 
 
 ```{r problem3}
