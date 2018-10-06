@@ -47,25 +47,42 @@ stations.
 
 2)There are 
 ```{r}
-count(distinct(filter(Transit_Data, ada == TRUE), station_name))
+count(distinct(filter(Transit_Data, ada == TRUE), station_name, line))
 ```
 stations are ADA compliant.
 
 3)The proportion of station entrance/exits without vending allow entrance is 
 ```{r}
-count(distinct(Transit_Data, entrances, vending = FALSE, entry = TRUE)) /
-  count(distinct(Transit_Data, entrances))
+n_without_vending_allow_entrance = 
+  Transit_Data %>% 
+  filter(vending == "NO", entry == "YES") %>% 
+  count()
+n_without_vending = 
+  Transit_Data %>% 
+  filter(vending == "NO") %>% 
+  count()
+n_without_vending_allow_entrance / 
+  n_without_vending
 ```
 
 4)There are 
 ```{r}
-count(distinct(filter(Transit_Data, route1 == "A")))
+reformed_data = Transit_Data %>% 
+  gather(key = route_number, value = route_served, route1:route11) %>% 
+  filter(route_served != 'NA')
+reformed_data %>% 
+  filter(route_served == "A") %>% 
+  distinct(line, station_name) %>% 
+  nrow()
 ```
 distict stations serve A train.
 
 5)Of the stations that serve the A train, there are
 ```{r}
-count(distinct(filter(Transit_Data, route1 == "A", ada == TRUE)))
+reformed_data %>% 
+  filter(route_served == "A", ada ==TRUE) %>% 
+  distinct(line, station_name) %>% 
+  nrow()
 ```
 distinct stations are ADA compliant.
 
@@ -79,8 +96,8 @@ library(tidyverse)
 MrTrash_Wheel = 
   read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 1, range = "A2:N338") %>% 
   janitor::clean_names() %>% 
-  filter(!is.na("weight")) %>% 
-  mutate(as.integer(round(sports_balls)))
+  filter(dumpster != "NA") %>% 
+  mutate(sports_balls = as.integer(sports_balls)) 
 ```
 
 ```{r}
@@ -108,7 +125,7 @@ prcp =
 ```
 
 
-The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` rows and `r ncol(MrTrash_Wheel)` columns, and the prcp dataset contains `r nrow(prcp)` rows and `r ncol(prcp)` columns. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(filter(MrTrash_Wheel, year == 2016)$sports_balls)`
+The MrTrash_Wheel dataset contains `r nrow(MrTrash_Wheel)` observations and `r ncol(MrTrash_Wheel)` variables, and the prcp dataset contains `r nrow(prcp)` observations and `r ncol(prcp)` variables. We focus on the weight, volumn and different items; total precipitation of each month. The total precipitation in 2017 was `r sum(prcp2017$total)`, and the median number of sports balls in a dumpster in 2016 was `r median(filter(MrTrash_Wheel, year == 2016)$sports_balls)`
 
 
 ```{r problem3}
@@ -127,7 +144,7 @@ brfss =
   janitor::clean_names() %>% 
   mutate(Proportion = excellent + very_good)
 ```
-# Answers
+Answers:
 There are 
 ```{r}
 nrow(distinct(brfss, locationdesc))
